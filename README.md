@@ -14,7 +14,7 @@ An alternate frontend for [kiwix-serve](https://github.com/kiwix/kiwix-tools), b
 1. Clone the repository:
 
    ```sh
-   git clone https://github.com/you/zim-shelf ~/zim-shelf
+   git clone https://github.com/njfletcher215/zim-shelf ~/zim-shelf
    cd ~/zim-shelf
    ```
 
@@ -27,7 +27,7 @@ An alternate frontend for [kiwix-serve](https://github.com/kiwix/kiwix-tools), b
 3. Create a `.env` file in the project root and set your kiwix-serve base URL:
 
    ```sh
-   VITE_KIWIX_SERVE_BASE_URL=http://localhost:8080
+   VITE_KIWIX_SERVE_BASE_URL=http://localhost:80
    ```
 
 4. Start the development server:
