@@ -24,10 +24,10 @@ An alternate frontend for [kiwix-serve](https://github.com/kiwix/kiwix-tools), b
    npm install
    ```
 
-3. Create a `.env` file in the project root and set your kiwix-serve base URL:
+3. Create the `.env` file -- use `.env.example` as a template for reasonable defaults.
 
    ```sh
-   VITE_KIWIX_SERVE_BASE_URL=http://localhost:80
+   cp .env.example .env
    ```
 
 4. Start the development server:
