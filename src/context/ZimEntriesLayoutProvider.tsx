@@ -5,7 +5,7 @@ function ZimEntriesLayoutProvider({ children }: { children: React.ReactNode }) {
     const [zimEntriesLayout, setZimEntriesLayout] = useState<ZimEntriesLayout>(
         (localStorage.getItem('zimEntriesLayout') as ZimEntriesLayout) ?? 'card'
     );
-    const [isLoading, setLoading] = useState(true);
+    const [isLoading] = useState(true);
 
     function updateZimEntriesLayout(newZimEntriesLayout: ZimEntriesLayout) {
         setZimEntriesLayout(newZimEntriesLayout);

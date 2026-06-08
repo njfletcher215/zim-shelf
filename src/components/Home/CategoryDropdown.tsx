@@ -58,8 +58,8 @@ function CategoryDropdown() {
                     <DropdownMenuCheckboxItem
                         key={category}
                         checked={zimEntriesFilterCategories.includes(category)}
-                        onSelect={(event) => event.preventDefault()}
-                        onCheckedChange={(checked) => {
+                        onSelect={(event: Event) => event.preventDefault()}
+                        onCheckedChange={(checked: boolean) => {
                             if (checked) addZimEntriesFilterCategory(category);
                             else removeZimEntriesFilterCategory(category);
                         }}

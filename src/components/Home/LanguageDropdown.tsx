@@ -72,8 +72,8 @@ function LanguageDropdown() {
                             key={language.code}
                             className="flex items-center"
                             checked={zimEntriesFilterLanguages.includes(language.code)}
-                            onSelect={(event) => event.preventDefault()}
-                            onCheckedChange={(checked) => {
+                            onSelect={(event: Event) => event.preventDefault()}
+                            onCheckedChange={(checked: boolean) => {
                                 if (checked) addZimEntriesFilterLanguage(language.code);
                                 else removeZimEntriesFilterLanguage(language.code);
                             }}
