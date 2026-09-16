@@ -29,7 +29,8 @@ interface ZimEntriesContextType {
         maxsize?: number,
         q?: string,
         name?: string
-    }) => void
+    }) => void,
+    clearSearch: () => void
 }
 
 const ZimEntriesContext = createContext<ZimEntriesContextType | null>(null);

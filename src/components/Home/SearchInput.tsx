@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { MagnifyingGlassIcon } from "@phosphor-icons/react";
+import { MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 
 import { useZimEntries } from "@/context/ZimEntriesContext.ts";
 import { Input } from "@/components/ui/input.tsx";
 import { Button } from "@/components/ui/button.tsx";
 
 function SearchInput() {
-    const { fetchZimEntries } = useZimEntries();
+    const { fetchZimEntries, clearSearch } = useZimEntries();
     const [ searchQuery, setSearchQuery ] = useState<string>('');
 
     return (
@@ -18,13 +18,28 @@ function SearchInput() {
             <Button type="submit">
                 <MagnifyingGlassIcon />
             </Button>
-            <Input
-                className="w-64"
-                type="text"
-                placeholder="Search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <div className="relative">
+                <Input
+                    className="w-64 pr-6"
+                    type="text"
+                    placeholder="Search"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                {searchQuery !== '' && (
+                    <button
+                        type="button"
+                        aria-label="Clear search"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                        onClick={() => {
+                            setSearchQuery('');
+                            clearSearch();
+                        }}
+                    >
+                        <XIcon />
+                    </button>
+                )}
+            </div>
         </form>
     )
 }
