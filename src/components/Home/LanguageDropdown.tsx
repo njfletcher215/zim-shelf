@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react";
+import { ArrowCounterClockwiseIcon, UnionIcon, IntersectIcon } from "@phosphor-icons/react";
 import { useZimEntriesFilter } from "@/context/ZimEntriesFilterContext.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Badge } from "@/components/ui/badge.tsx";
@@ -7,8 +7,10 @@ import {
     DropdownMenu,
     DropdownMenuTrigger,
     DropdownMenuContent,
-    DropdownMenuCheckboxItem
+    DropdownMenuCheckboxItem,
+    DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu.tsx";
+import { Switch } from "@/components/ui/switch.tsx";
 import { fetchXml } from "@/lib/utils.ts";
 
 function LanguageDropdown() {
@@ -22,7 +24,9 @@ function LanguageDropdown() {
         zimEntriesFilterLanguages,
         updateZimEntriesFilterLanguages,
         addZimEntriesFilterLanguage,
-        removeZimEntriesFilterLanguage
+        removeZimEntriesFilterLanguage,
+        zimEntriesFilterLanguageMatchMode,
+        updateZimEntriesFilterLanguageMatchMode
     } = useZimEntriesFilter();
     const [
         availableZimEntriesLanguages,
@@ -67,6 +71,17 @@ function LanguageDropdown() {
                     }
                 </div>
                 <DropdownMenuContent className="w-48">
+                    <div className="flex items-center justify-center gap-2 px-2 py-1.5 text-sm">
+                        <UnionIcon aria-hidden />
+                        <Switch
+                            checked={zimEntriesFilterLanguageMatchMode === 'all'}
+                            onCheckedChange={(checked: boolean) =>
+                                updateZimEntriesFilterLanguageMatchMode(checked ? 'all' : 'any')}
+                            aria-label="Match all selected languages instead of any"
+                        />
+                        <IntersectIcon aria-hidden />
+                    </div>
+                    <DropdownMenuSeparator />
                     {availableZimEntriesLanguages.map((language: AvailableZimEntriesLanguage) => (
                         <DropdownMenuCheckboxItem
                             key={language.code}

@@ -1,8 +1,11 @@
 import { createContext, useContext } from 'react';
 
+type ZimEntriesFilterMatchMode = 'any' | 'all';
+
 type ZimEntriesFilter = {
     categories: string[],
     languages: string[],
+    languageMatchMode: ZimEntriesFilterMatchMode,
     searchQuery: string
 }
 
@@ -17,6 +20,9 @@ interface ZimEntriesFilterContextType {
         (newZimEntriesFilterLanguages: string[]) => void,
     addZimEntriesFilterLanguage: (toAdd: string) => void,
     removeZimEntriesFilterLanguage: (toRemove: string) => void,
+    zimEntriesFilterLanguageMatchMode: ZimEntriesFilterMatchMode,
+    updateZimEntriesFilterLanguageMatchMode:
+        (newZimEntriesFilterLanguageMatchMode: ZimEntriesFilterMatchMode) => void,
     zimEntriesFilterSearchQuery: string,
     updateZimEntriesFilterSearchQuery:
         (newZimEntriesFilterSearchQuery: string) => void
@@ -32,6 +38,7 @@ function useZimEntriesFilter() {
 
 export {
     type ZimEntriesFilter,
+    type ZimEntriesFilterMatchMode,
     ZimEntriesFilterContext,
     useZimEntriesFilter
 };

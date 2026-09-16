@@ -8,6 +8,7 @@ function ZimEntryCards() {
     const { zimEntries, fetchZimEntries } = useZimEntries();
     const {
         zimEntriesFilterLanguages,
+        zimEntriesFilterLanguageMatchMode,
         zimEntriesFilterCategories
     } = useZimEntriesFilter();
     const { zimEntriesLayout } = useZimEntriesLayout();
@@ -21,7 +22,9 @@ function ZimEntryCards() {
         <div className="flex flex-wrap justify-center gap-2">
             {zimEntries
                 .filter((zimEntry) => zimEntriesFilterLanguages.length == 0 ||
-                        zimEntry.languages.some((language) => zimEntriesFilterLanguages.includes(language)))
+                        (zimEntriesFilterLanguageMatchMode === 'all'
+                            ? zimEntriesFilterLanguages.every((language) => zimEntry.languages.includes(language))
+                            : zimEntriesFilterLanguages.some((language) => zimEntry.languages.includes(language))))
                 .filter((zimEntry) => zimEntriesFilterCategories.length == 0 ||
                         zimEntriesFilterCategories.includes(zimEntry.category))
                 .map((zimEntry) =>
