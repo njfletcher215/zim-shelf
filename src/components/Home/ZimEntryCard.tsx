@@ -1,6 +1,8 @@
 import { type ZimEntry } from "@/context/ZimEntriesContext.ts";
 import { type ZimEntriesLayout } from "@/context/ZimEntriesLayoutContext.ts";
 import { Card } from "@/components/ui/card.tsx";
+import RandomButton from "@/components/Home/RandomButton.tsx";
+import ZimEntrySearchInput from "@/components/Home/ZimEntrySearchInput.tsx";
 import { cn, resolveMainPagePath } from "@/lib/utils.ts";
 
 function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimEntry }) {
@@ -15,12 +17,25 @@ function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimE
         window.location.href = `${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}/raw/${zimname}/content/${path}`;
     }
 
+    // each clickable region below gets its own <a> with these same props, rather than one
+    // anchor wrapping the whole card, since real interactive controls (search form, random
+    // button) can't validly nest inside an <a>, and now live in-flow alongside this content
+    // rather than overlaid on top of it
+    const mainPageLinkProps = {
+        href: `${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}${entry.rawURL}`,
+        onClick: handleClick
+    };
+
+    const controls = (
+        <div className="flex items-center gap-1 shrink-0">
+            <ZimEntrySearchInput zimname={zimname} />
+            <RandomButton zimname={zimname} />
+        </div>
+    );
+
     return (
-        <a
-            href={`${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}${entry.rawURL}`}
-            onClick={handleClick}
-            className={cn(
-                (layout === 'card') ? "w-64 h-64" : "w-full h-16"
+        <div className={cn(
+            (layout === 'card') ? "w-64 h-64" : "w-full h-16"
         )}>
             <Card className={cn(
                 "w-full h-full",
@@ -32,20 +47,23 @@ function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimE
                     "min-w-0",
                     (layout === 'row') && "w-[30%]"
                 )}>
-                    <img src={`${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}${entry.thumbnailURL}`} />
-                    <h1 className="text-lg text-foreground truncate">{entry.title}</h1>
+                    <a {...mainPageLinkProps} className="flex items-center gap-2 min-w-0 flex-1">
+                        <img src={`${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}${entry.thumbnailURL}`} />
+                        <h1 className="text-lg text-foreground truncate">{entry.title}</h1>
+                    </a>
+                    {(layout === 'card') && controls}
                 </div>
-                <div className={cn(
+                <a {...mainPageLinkProps} className={cn(
                     "flex-1",
                     "min-w-0",
-                    (layout === 'row') && "flex items-center"
+                    (layout === 'row') ? "flex items-center" : "block"
                 )}>
                     <p className={cn(
                         "text-sm text-muted-foreground",
                         (layout === 'card') ? "line-clamp-6" : "line-clamp-3"
                     )}>{entry.summary}</p>
-                </div>
-                <div className={cn(
+                </a>
+                <a {...mainPageLinkProps} className={cn(
                     "flex justify-between",
                     "text-xs text-muted-foreground",
                     "min-w-0",
@@ -54,9 +72,10 @@ function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimE
                 )}>
                     <span className="truncate">{entry.languages.join(", ")}</span>
                     <span className="truncate">{entry.tags.filter((tag) => tag[0] != "_").join(" | ")}</span>
-                </div>
+                </a>
+                {(layout === 'row') && controls}
             </Card>
-        </a>
+        </div>
     )
 }
 

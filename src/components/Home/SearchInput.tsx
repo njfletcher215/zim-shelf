@@ -28,7 +28,7 @@ function SearchInput() {
     }, [searchQuery]);
 
     return (
-        <form className="flex items-center" onSubmit={(e) => {
+        <form className="flex items-center gap-1" onSubmit={(e) => {
                 e.preventDefault();
                 clearTimeout(debounceRef.current);
                 fetchZimEntries({q: searchQuery})
