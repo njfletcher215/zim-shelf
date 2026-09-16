@@ -48,7 +48,9 @@ function ZimEntriesProvider({ children }: { children: React.ReactNode }) {
                             const parts = contentURL.split('/'); // ['', 'content', '<zimname>', '<path?>']
                             const zimname = parts[2];
                             const path = parts[3] ?? '';
-                            return zimname ? `/raw/${zimname}/content/${path || 'index'}` : '';
+                            // path is resolved lazily (see resolveMainPagePath) since kiwix-serve
+                            // doesn't expose a ZIM's main page anywhere but a private, per-zim redirect
+                            return zimname ? `/raw/${zimname}/content/${path}` : '';
                         })(),
                         author: el.querySelector("author name")?.textContent ?? '',
                         publisher: el.querySelector("publisher name")?.textContent ?? ''

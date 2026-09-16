@@ -1,13 +1,24 @@
 import { type ZimEntry } from "@/context/ZimEntriesContext.ts";
 import { type ZimEntriesLayout } from "@/context/ZimEntriesLayoutContext.ts";
 import { Card } from "@/components/ui/card.tsx";
-import { cn } from "@/lib/utils.ts";
+import { cn, resolveMainPagePath } from "@/lib/utils.ts";
 
 function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimEntry }) {
     /* TODO remove the VITE_KIWIX_SERVE_BASE_URL from the <a> href after viewer page is implemented */
+    const [, , zimname, , ...pathParts] = entry.rawURL.split('/'); // ['', 'raw', '<zimname>', 'content', ...'<path?>']
+    const needsMainPageResolution = pathParts.join('/') === '';
+
+    async function handleClick(e: React.MouseEvent<HTMLAnchorElement>) {
+        if (!needsMainPageResolution || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        const path = await resolveMainPagePath(zimname);
+        window.location.href = `${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}/raw/${zimname}/content/${path}`;
+    }
+
     return (
         <a
             href={`${import.meta.env.VITE_KIWIX_SERVE_BASE_URL}${entry.rawURL}`}
+            onClick={handleClick}
             className={cn(
                 (layout === 'card') ? "w-64 h-64" : "w-full h-16"
         )}>
