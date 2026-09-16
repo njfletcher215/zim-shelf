@@ -4,7 +4,7 @@ type ZimEntry = {
     id: string,
     title: string,
     summary: string,
-    language: string,
+    languages: string[],
     name: string,
     flavour: string,
     category: string,

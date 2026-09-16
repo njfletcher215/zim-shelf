@@ -52,7 +52,7 @@ function ZimEntryCard({ layout, entry }: { layout: ZimEntriesLayout, entry: ZimE
                     (layout === 'row') && "flex-col shrink-0",
                     (layout === 'row') && "h-full text-right"
                 )}>
-                    <span className="truncate">{entry.language}</span>
+                    <span className="truncate">{entry.languages.join(", ")}</span>
                     <span className="truncate">{entry.tags.filter((tag) => tag[0] != "_").join(" | ")}</span>
                 </div>
             </Card>

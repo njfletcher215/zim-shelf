@@ -21,7 +21,7 @@ function ZimEntryCards() {
         <div className="flex flex-wrap justify-center gap-2">
             {zimEntries
                 .filter((zimEntry) => zimEntriesFilterLanguages.length == 0 ||
-                        zimEntriesFilterLanguages.includes(zimEntry.language))
+                        zimEntry.languages.some((language) => zimEntriesFilterLanguages.includes(language)))
                 .filter((zimEntry) => zimEntriesFilterCategories.length == 0 ||
                         zimEntriesFilterCategories.includes(zimEntry.category))
                 .map((zimEntry) =>

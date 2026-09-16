@@ -34,7 +34,7 @@ function ZimEntriesProvider({ children }: { children: React.ReactNode }) {
                     id: el.querySelector("id")?.textContent ?? '',
                     title: el.querySelector("title")?.textContent ?? '',
                     summary: el.querySelector("summary")?.textContent ?? '',
-                    language: el.querySelector("language")?.textContent ?? '',
+                    languages: (el.querySelector("language")?.textContent ?? '').split(',').filter(l => l !== ''),
                     name: el.querySelector("name")?.textContent ?? '',
                     flavour: el.querySelector("flavour")?.textContent ?? '',
                     category: el.querySelector("category")?.textContent ?? '',
